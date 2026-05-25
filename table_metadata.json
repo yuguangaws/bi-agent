@@ -1,0 +1,4 @@
+[
+    {"table_name": "sales_order", "columns": "order_id,amount,order_time,product_name,user_id", "comment": "销售订单表，记录订单id，总销量，订单时间，产品名称，用户id"},
+    {"table_name": "users", "columns": "id,user_name,age,city,create_time", "comment": "用户信息表，记录用户id，名字，年龄，城市，创建时间"}
+]
