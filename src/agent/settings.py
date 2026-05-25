@@ -33,7 +33,7 @@ embedding = ZhipuAIEmbeddings(
 DB_CONFIG = {
     "host": "localhost",
     "user": "root",
-    "password": "MyNew#Pass123",
+    "password": "xxxxxxx",
     "database": "bi_test",
     "port": 3306
 }
