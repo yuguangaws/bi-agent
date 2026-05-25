@@ -1,5 +1,5 @@
 ## Getting Started
-0. 学习langgraph以来写的第一个agent，其中agent构思80%人工+20%AI，代码80%AI+20%人工
+0. 学习langgraph以来写的第一个agent
 流程图如下：
 <img width="685" height="1266" alt="image" src="https://github.com/user-attachments/assets/6a93539f-4751-4bed-ad1c-75004134fec2" />
 
