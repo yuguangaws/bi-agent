@@ -9,13 +9,14 @@
 - graph.py里的validate_sql用于将生成的SQL和用户的需求做二次校验，通过后才执行SQL，不通过则重试上述步骤
 - streamlit_app.py做一个简单的UI页面
 
-2. Install dependencies
+#
+1. Install dependencies
 
 ```bash
 cd path/to/your/app
 uv pip install -r requirement.txt
 ```
-
+#
 2. Customize the code and project as needed. Create a `.env` file if you need to use secrets.
 
 ```bash
@@ -24,12 +25,12 @@ cp .env.example .env
 ZHIPUAI_API_KEY=xxxxxx
 ZHIPUAI_DEFAULT_MODEL=glm-3-turbo
 ```
-
+#
 3. Start the bi-agent.
 
 ```shell
 streamlit run streamlit_app.py
 ```
-
+#
 实际运行效果图如下：
 <img width="3612" height="4176" alt="image" src="https://github.com/user-attachments/assets/5fdd413b-302d-4f9e-91e9-ef21d9c48906" />
