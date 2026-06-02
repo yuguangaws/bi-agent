@@ -8,9 +8,18 @@ def analyze_demand(state: BIState) -> BIState:
     """节点1：需求分析"""
     user_input = state["user_input"]
     prompt = f"""
-    你是智能BI需求分析师，将用户自然语言转换为结构化查询需求：
+    你是智能BI需求分析师，只能使用以下【50张表】进行需求分析，绝对不能使用不存在的表！
+    
+    【系统允许使用的50张表清单】：
+    user, product, `order`, order_item, refund, category, supplier, cart, coupon, user_coupon,
+    comment, user_footprint, user_favorite, inventory, inventory_log, logistics, payment, activity,
+    activity_product, ad, ad_click, dept, employee, permission, role, role_permission, user_role,
+    sys_log, login_log, user_sign, user_points, user_level, region, user_address, after_sale, notice,
+    user_notice, feedback, recharge, withdraw, user_account, account_log, visit_stat, sale_stat,
+    product_stat, user_stat, channel_stat, activity_stat, goods_return_stat, finance_stat
+
     用户输入：{user_input}
-    输出要求：明确查询指标、筛选条件、时间范围、关联表
+    输出要求：明确查询指标、筛选条件、时间范围、必须从上面表里选择【关联表】，不能编造表名！
     """
     response = llm_generate.invoke(prompt)
     return {"demand_analysis": response.content}
@@ -22,11 +31,22 @@ def generate_sql_via_mcp(state: BIState) -> BIState:
     
     schema = mcp_tools.get_relevant_tables(user_query=user_input)
     prompt = f"""
-    你是SQL专家，根据需求和表结构生成合规SQL：
+    你是SQL专家，**只能使用下面提供的表结构，绝对不能使用不存在的表**！
+    系统允许使用的50张表：
+    user, product, `order`, order_item, refund, category, supplier, cart, coupon, user_coupon,
+    comment, user_footprint, user_favorite, inventory, inventory_log, logistics, payment, activity,
+    activity_product, ad, ad_click, dept, employee, permission, role, role_permission, user_role,
+    sys_log, login_log, user_sign, user_points, user_level, region, user_address, after_sale, notice,
+    user_notice, feedback, recharge, withdraw, user_account, account_log, visit_stat, sale_stat,
+    product_stat, user_stat, channel_stat, activity_stat, goods_return_stat, finance_stat
+
+    生成规则：
     1. 严格禁止使用 select *，必须指定字段
     2. 语法标准：MySQL
     3. 表结构：{schema}
     4. 用户需求：{demand}
+    5. 只能使用上述50张表，**严禁编造不存在的表名**
+
     只输出纯SQL语句，不要任何解释, 禁止添加任何Markdown格式、反引号```、注释、多余符号、换行，仅返回干净的SQL文本
     """
     sql = llm_generate.invoke(prompt).content.strip()
